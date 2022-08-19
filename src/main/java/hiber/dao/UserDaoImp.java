@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserDaoImp implements UserDao {
 
-   @Autowired
-   private SessionFactory sessionFactory;
+   private final SessionFactory sessionFactory;
+
+   public UserDaoImp(SessionFactory sessionFactory) {
+      this.sessionFactory = sessionFactory;
+   }
 
    @Override
    public void add(User user) {
@@ -38,6 +40,6 @@ public class UserDaoImp implements UserDao {
               "(from Car c where c.model=:model and c.series=:series)");
       query.setParameter("model", model);
       query.setParameter("series", series);
-      return (List<User>) query.getResultList();
+      return query.getResultList();
    }
 }
